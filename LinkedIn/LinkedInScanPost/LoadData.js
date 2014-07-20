@@ -32,12 +32,15 @@ function loadData() {
 						var newDate = new Date();
 						newDate.setTime(posts.values[j].creationTimestamp * 1000);
 
-						text += '<div class="post">';
-						text += '<div class="title">title: ' + posts.values[j].title + '</div>';
-						text += '<div class="summary">summary: ' + posts.values[j].summary + '</div>';
-						text += '<div class="date">date: ' + newDate.toUTCString() + '</div>';
-						text += '<div class="url">url: ' + posts.values[j].siteGroupPostUrl + '</div>';
-						text += '</div>';
+						text += '<div class="panel panel-primary">';
+						text += '<div class="panel-heading"><h3 class="panel-title">' + posts.values[j].title + '</h3></div>';
+
+						text += '<div class="panel-body">' + posts.values[j].summary + '</div>';
+
+						text += '<div class="panel-footer">';
+						text += '<a class="url" style="" href="' + posts.values[j].siteGroupPostUrl + '"><img src="LinkedIn.jpg" alt="LinkedIn logo" height="32" width="32" /></a>';
+						text += '&nbsp;<span class="date">' + newDate.toUTCString() + '</span>';
+						text += '</div></div>';
 					}
 				}
 
