@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<title>Test LinkedIn connect!</title>
+<script type="text/javascript" src="http://platform.linkedin.com/in.js">
+  api_key: 75548prrx707qw
+  scope: rw_groups
+  authorize: true
+</script>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link media="all" type="text/css" href="../css/jqueryui.css" rel="stylesheet"/>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.5b1.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js"></script>  
+
+<script type="text/javascript">
+function loadData() {
+    IN.API.Raw("/people/~/group-memberships").result(function (result) {
+        //console.log(result);
+
+        for (var i = 0; i < result._total; i++) {
+            var groupId = result.values[i].group.id;
+            //var groupName = result.values[i].group.name;
+
+            var f = function (posts) {
+                //var _groupName = groupName;
+                //console.log('=======================' + _groupName + '=========================');
+                //console.log(posts);
+
+                var text = '';
+
+                for (var j = 0; j < posts._count; j++) {
+                    var newDate = new Date();
+                    newDate.setTime(posts.values[j].creationTimestamp * 1000);
+
+                    text += 'title: ' + posts.values[j].title + '<br/>';
+                    text += 'summary: ' + posts.values[j].summary + '<br/>';
+                    text += 'date: ' + newDate.toUTCString() + '<br/>';
+                    text += 'url: ' + posts.values[j].siteGroupPostUrl + '<br/><br/>';
+                }
+
+                var el = document.getElementById('search');
+                el.innerHTML = text;
+            };
+
+            var fCount = function (posts) {
+                var count = posts._total;
+                IN.API.Raw('/groups/' + groupId + '/posts:(creation-timestamp,title,summary,site-group-post-url)?count=' + count + '&start=0').result(f);
+            };
+            IN.API.Raw('/groups/' + groupId + '/posts:(creation-timestamp,title,summary,site-group-post-url)?count=0&start=0').result(fCount);
+        }
+    });
+}</script>
+
+</head>
+<body class="yui3-skin-sam	yui-skin-sam">
+	<div id="search">
+    </div>
+    <script type="IN/Login" data-onAuth="loadData"></script>
+</body>
+</html>
