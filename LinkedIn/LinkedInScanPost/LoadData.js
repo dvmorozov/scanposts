@@ -5,7 +5,7 @@ var words = [/job/i, /SCADA/i];
 function hasWord(text) {
 	if (text !== undefined && text !== null) {
 		for (var i = 0; i < words.length; i++) {
-			if (text.search(words[i]))
+			if (text.search(words[i]) !== -1)
 				return true;
 		}
 	}
@@ -30,7 +30,7 @@ function loadData() {
 				for (var j = 0; j < posts._count; j++) {
 					if (hasWord(posts.values[j].title) || hasWord(posts.values[j].summary)) {
 						var newDate = new Date();
-						newDate.setTime(posts.values[j].creationTimestamp * 1000);
+						newDate.setTime(posts.values[j].creationTimestamp);
 
 						text += '<div class="panel panel-primary">';
 						text += '<div class="panel-heading"><h3 class="panel-title">' + posts.values[j].title + '</h3></div>';
