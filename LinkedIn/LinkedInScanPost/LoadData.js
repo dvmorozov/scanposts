@@ -1,18 +1,40 @@
 ﻿
-//  Can be initialized by regular expressions.
-var words = [/job/i, /SCADA/i];
+var settings = {
+	//  Can be initialized by regular expressions.
+	words : [/job/i, /SCADA/i]
+};
+
+function isDefined(obj) {
+	if (obj !== undefined && obj !== null) return true;
+	else return false;
+}
 
 function hasWord(text) {
-	if (text !== undefined && text !== null) {
-		for (var i = 0; i < words.length; i++) {
-			if (text.search(words[i]) !== -1)
+	if (!isDefined(text)) return false;
+	if (isDefined(settings) && isDefined(settings.words)) {
+		for (var i = 0; i < settings.words.length; i++) {
+			if (text.search(settings.words[i]) !== -1)
 				return true;
 		}
+		return false;
 	}
-	return false;
+	//	Filter is undefined.
+	return true;
+}
+
+function readSettings() {
+	var text = $.cookie('settings');
+	if (isDefined(text))
+		settings = $.parseJSON(text);
+	else settings = null;
+}
+
+function writeSettings() {
+	$.cookie('settings', settings.toJSON());
 }
 
 function loadData() {
+	readSettings();
 	IN.API.Raw("/people/~/group-memberships").result(function (result) {
 		//console.log(result);
 
