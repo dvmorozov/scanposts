@@ -32,7 +32,7 @@ function readSettings() {
 }
 
 function writeSettings() {
-	$.cookie('settings', settings.toJSON());
+	$.cookie('settings', JSON.stringify(settings));
 }
 
 function loadData() {

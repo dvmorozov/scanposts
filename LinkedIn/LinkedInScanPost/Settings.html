@@ -1,7 +1,7 @@
-﻿<!doctype html>
-<html>
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
 <head>
-	<title>Selected LinkeIn posts</title>
+	<title>Add keywords</title>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
 	<!-- Optional theme -->
@@ -14,18 +14,19 @@
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js"></script>
 
-	<script type="text/javascript" src="http://platform.linkedin.com/in.js">
-		api_key: 75548prrx707qw
-		scope: rw_groups
-		authorize: true
-	</script>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-	<script type="text/javascript" src="LoadData.js"></script>
-</head>
-<body class="yui3-skin-sam	yui-skin-sam">
-	<div id="search">
+	<script type="text/javascript" src="LoadData.js"></script></head>
+	<script type="text/javascript" src="Keywords.js"></script></head>
+<body onload="fillKeywords();">
+	<div class="input-group">
+		<span class="input-group-addon">Keyword</span>
+		<input type="text" class="form-control" placeholder="Keyword" id="keyword">
 	</div>
-	<script type="IN/Login" data-onauth="loadData"></script>
+
+	<button type="button" class="btn btn-default" onclick="addKeyword();">Add</button>
+
+	<ul class="list-group" id="keywords">
+	</ul>
 </body>
 </html>
