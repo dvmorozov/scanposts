@@ -1,8 +1,5 @@
 ﻿
-var settings = {
-	//  Can be initialized by regular expressions.
-	words : [/job/i, /SCADA/i]
-};
+var settings = null;
 
 function isDefined(obj) {
 	if (obj !== undefined && obj !== null) return true;
@@ -26,7 +23,12 @@ function readSettings() {
 	var text = $.cookie('settings');
 	if (isDefined(text))
 		settings = $.parseJSON(text);
-	else settings = null;
+	//	Sets up default configuration.
+	else settings = {
+		//  Can be initialized by regular expressions.
+		words: [/job/i, /SCADA/i],
+		lastTimeStamp: null
+	}; ;
 }
 
 function writeSettings() {
@@ -52,7 +54,11 @@ function loadData() {
 				for (var j = 0; j < posts._count; j++) {
 					if (hasWord(posts.values[j].title) || hasWord(posts.values[j].summary)) {
 						var newDate = new Date();
-						newDate.setTime(posts.values[j].creationTimestamp);
+						var timestamp = posts.values[j].creationTimestamp;
+						newDate.setTime(timestamp);
+
+						if (!isDefined(settings.lastTimeStamp) || timestamp > settings.lastTimeStamp)
+							settings.lastTimeStamp = timestamp;
 
 						text += '<div class="panel panel-primary">';
 						text += '<div class="panel-heading"><h3 class="panel-title">' + posts.values[j].title + '</h3></div>';
@@ -77,4 +83,5 @@ function loadData() {
 			IN.API.Raw('/groups/' + groupId + '/posts:(creation-timestamp,title,summary,site-group-post-url)?count=0&start=0').result(fCount);
 		}
 	});
+	writeSettings();
 }
