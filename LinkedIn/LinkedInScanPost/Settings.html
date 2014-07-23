@@ -19,12 +19,16 @@
 	<script type="text/javascript" src="LoadData.js"></script></head>
 	<script type="text/javascript" src="Keywords.js"></script></head>
 <body onload="fillKeywords();">
+	<ul class="nav nav-tabs" role="tablist">
+		<li class="active"><a href="Settings.html">Keywords</a></li>
+		<li><a href="LinkedIn.html">Messages</a></li>
+	</ul>
 	<div class="input-group">
-		<span class="input-group-addon">Keyword</span>
-		<input type="text" class="form-control" placeholder="Type here" id="keyword">
+		<span class="input-group-btn">
+			<button type="button" class="btn btn-default" onclick="addKeyword();">Add</button>
+		</span>
+		<input type="text" class="form-control" placeholder="Type keyword here" id="keyword">
 	</div>
-
-	<button type="button" class="btn btn-default" onclick="addKeyword();">Add</button>
 
 	<ul class="list-group" id="keywords">
 	</ul>
