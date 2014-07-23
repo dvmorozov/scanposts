@@ -4,8 +4,24 @@ function showKeywordList() {
 		$("#keywords").empty();
 
 		for (var i = 0; i < settings.words.length; i++) {
-			$("#keywords").append( '<li class="list-group-item">' + settings.words[i] + '</li>');
+			$("#keywords").append('<li class="list-group-item">' + settings.words[i] + 
+				'<a href="#" onclick="onDeleteClick(' + i + ');" class="delete_keyword_link"><span class="glyphicon glyphicon-trash" style="text-align:right;"></span></a></li>');
 		}
+	}
+}
+
+function onDeleteClick(index) {
+	deleteKeyword(index);
+	return false;
+}
+
+function deleteKeyword(index) {
+	if (isDefined(index)) {
+		if (isDefined(settings) && isDefined(settings.words))
+			delete settings.words.splice(index, 1);
+
+		writeSettings();
+		showKeywordList();
 	}
 }
 
