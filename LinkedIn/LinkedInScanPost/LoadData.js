@@ -10,7 +10,7 @@ function hasWord(text) {
 	if (!isDefined(text)) return false;
 	if (isDefined(settings) && isDefined(settings.words)) {
 		for (var i = 0; i < settings.words.length; i++) {
-			if (text.search(settings.words[i]) !== -1)
+			if (text.search(new RegExp(settings.words[i], 'i')) !== -1)
 				return true;
 		}
 		return false;
@@ -25,8 +25,7 @@ function readSettings() {
 		settings = $.parseJSON(text);
 	//	Sets up default configuration.
 	else settings = {
-		//  Can be initialized by regular expressions.
-		words: [/job/i, /SCADA/i],
+		words: ['job', 'SCADA'],
 		lastTimeStamp: null
 	}; ;
 }
@@ -52,7 +51,20 @@ function loadData() {
 				var text = '';
 
 				for (var j = 0; j < posts._count; j++) {
-					if (hasWord(posts.values[j].title) || hasWord(posts.values[j].summary)) {
+					var summary = posts.values[j].summary;
+					var hasWordInSummary = hasWord(summary);
+
+					if (hasWord(posts.values[j].title) || hasWordInSummary) {
+						if (hasWordInSummary) {
+							//	Marks out the keywords.
+							for (var i = 0; i < settings.words.length; i++) {
+								var keyword = settings.words[i];
+
+								summary = summary.replace(keyword, 
+									'<span class="keyword">' + keyword + '</span>');
+							}
+						}
+
 						var newDate = new Date();
 						var timestamp = posts.values[j].creationTimestamp;
 						newDate.setTime(timestamp);
@@ -63,7 +75,7 @@ function loadData() {
 						text += '<div class="panel panel-primary">';
 						text += '<div class="panel-heading"><h3 class="panel-title">' + posts.values[j].title + '</h3></div>';
 
-						text += '<div class="panel-body">' + posts.values[j].summary + '</div>';
+						text += '<div class="panel-body">' + summary + '</div>';
 
 						text += '<div class="panel-footer">';
 						text += '<a class="url" style="" href="' + posts.values[j].siteGroupPostUrl + '"><img src="LinkedIn.jpg" alt="LinkedIn logo" height="32" width="32" /></a>';
