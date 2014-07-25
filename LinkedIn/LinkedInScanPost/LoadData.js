@@ -35,24 +35,25 @@ function writeSettings() {
 }
 
 //	Loads list of groups.
-function loadGroups(forChunk) {
+function loadGroups(forChunk, start, count) {
 
 	var f = function (result) {
-		if (isDefined(result) && isDefined(result._count) && isDefined(result._total) && isDefined(result._start) && isDefined(result.values)) {
-			if (result._start === 0 && result._count < result._total) {
-				//	Makes additional requests.
-				for (var start = result._count; start < result._total; start += result._count) {
-					IN.API.Raw('/people/~/group-memberships?count=' + (result._count < result._total - start ? result._count : result._total - start)
-						+ '&start=' + start).result(f);
-				}
-			}
-
+		if (isDefined(result) && isDefined(result._count) && isDefined(result._total) && isDefined(result._start)) {
 			//	Makes something with the chunk of group list.
 			forChunk(result);
+
+			var newStart = result._start + result._count;
+			var newCount = (result._count < result._total - newStart ? result._count : result._total - newStart);
+			loadGroups(forChunk, newStart, newCount);
 		}
 	};
 
-	IN.API.Raw("/people/~/group-memberships").result(f);
+	if (isDefined(count) && isDefined(start)) {
+		if (count === 0) return;
+		else
+			IN.API.Raw('/people/~/group-memberships?count=' + count + '&start=' + start).result(f);
+	} else
+		IN.API.Raw("/people/~/group-memberships").result(f);
 }
 
 function loadData() {
@@ -137,5 +138,6 @@ function loadData() {
 			}
 		}
 	});
+
 	writeSettings();
 }
