@@ -25,7 +25,7 @@ function readSettings() {
 		settings = $.parseJSON(text);
 	//	Sets up default configuration.
 	else settings = {
-		words: ['job', 'SCADA'],
+		words: [],
 		lastTimeStamp: null
 	}; ;
 }
@@ -36,63 +36,81 @@ function writeSettings() {
 
 function loadData() {
 	readSettings();
+
+	//	Loading list of groups.
 	IN.API.Raw("/people/~/group-memberships").result(function (result) {
-		//console.log(result);
+		var selected = 0;
+		var received = 0;
+		var text = '';
 
-		for (var i = 0; i < result._total; i++) {
-			var groupId = result.values[i].group.id;
-			//var groupName = result.values[i].group.name;
+		if (isDefined(result) && isDefined(result.values) && isDefined(result._total)) {
 
-			var f = function (posts) {
-				//var _groupName = groupName;
-				//console.log('=======================' + _groupName + '=========================');
-				//console.log(posts);
+			for (var i = 0; i < result._count; i++) {
+				var groupId = result.values[i].group.id;
 
-				var text = '';
+				var f = function (posts) {
 
-				for (var j = 0; j < posts._count; j++) {
-					var summary = posts.values[j].summary;
-					var hasWordInSummary = hasWord(summary);
+					if (isDefined(posts) && isDefined(posts._count) && isDefined(posts.values)) {
+						received += posts._count;
 
-					if (hasWord(posts.values[j].title) || hasWordInSummary) {
-						if (hasWordInSummary) {
-							//	Marks out the keywords.
-							for (var i = 0; i < settings.words.length; i++) {
-								var keyword = settings.words[i];
+						for (var j = 0; j < posts._count; j++) {
+							var summary = posts.values[j].summary;
+                            var newDate = new Date();
 
-								summary = summary.replace(keyword, 
-									'<span class="keyword">' + keyword + '</span>');
+							if (isDefined(summary)) {
+								var hasWordInSummary = hasWord(summary);
+
+								if ((isDefined(posts.values[j].title) && hasWord(posts.values[j].title)) ||
+                                    hasWordInSummary) {
+                                    if (hasWordInSummary) {
+                                        //	Marks out the keywords.
+                                        for (var k = 0; k < settings.words.length; k++) {
+                                            var keyword = settings.words[k];
+
+                                            summary = summary.replace(keyword,
+                                                    '<span class="keyword">' + keyword + '</span>');
+                                        }
+                                    }
+
+                                    var timestamp = posts.values[j].creationTimestamp;
+                                    if (isDefined(timestamp)) {
+                                        newDate.setTime(timestamp);
+
+                                        if (!isDefined(settings.lastTimeStamp) || timestamp > settings.lastTimeStamp)
+                                            settings.lastTimeStamp = timestamp;
+                                    }
+                                }
+
+                                text += '<div class="panel panel-primary">';
+                                text += '<div class="panel-heading"><h3 class="panel-title">' +
+                                    posts.values[j].title + '</h3></div>';
+
+                                text += '<div class="panel-body">' + summary + '</div>';
+
+                                text += '<div class="panel-footer">';
+                                text += '<a class="url" style="" href="' +
+                                    posts.values[j].siteGroupPostUrl +
+                                    '"><img src="LinkedIn.jpg" alt="LinkedIn logo" height="32" width="32" /></a>';
+
+                                text += '&nbsp;<span class="date">' + newDate.toUTCString() + '</span>';
+                                text += '</div></div>';
+
+                                ++selected;
+                                document.getElementById('search').innerHTML = text;
+                                document.getElementById('selected').innerHTML = 'Selected: ' + selected;
+                                document.getElementById('new').innerHTML = 'New: ' + received;
 							}
 						}
-
-						var newDate = new Date();
-						var timestamp = posts.values[j].creationTimestamp;
-						newDate.setTime(timestamp);
-
-						if (!isDefined(settings.lastTimeStamp) || timestamp > settings.lastTimeStamp)
-							settings.lastTimeStamp = timestamp;
-
-						text += '<div class="panel panel-primary">';
-						text += '<div class="panel-heading"><h3 class="panel-title">' + posts.values[j].title + '</h3></div>';
-
-						text += '<div class="panel-body">' + summary + '</div>';
-
-						text += '<div class="panel-footer">';
-						text += '<a class="url" style="" href="' + posts.values[j].siteGroupPostUrl + '"><img src="LinkedIn.jpg" alt="LinkedIn logo" height="32" width="32" /></a>';
-						text += '&nbsp;<span class="date">' + newDate.toUTCString() + '</span>';
-						text += '</div></div>';
 					}
-				}
+				};
 
-				var el = document.getElementById('search');
-				el.innerHTML = text;
-			};
+				var fCount = function (posts) {
+					var count = posts._total;
+					IN.API.Raw('/groups/' + groupId + '/posts:(creation-timestamp,title,summary,site-group-post-url)?count=' + count + '&start=0').result(f);
+				};
 
-			var fCount = function (posts) {
-				var count = posts._total;
-				IN.API.Raw('/groups/' + groupId + '/posts:(creation-timestamp,title,summary,site-group-post-url)?count=' + count + '&start=0').result(f);
-			};
-			IN.API.Raw('/groups/' + groupId + '/posts:(creation-timestamp,title,summary,site-group-post-url)?count=0&start=0').result(fCount);
+				IN.API.Raw('/groups/' + groupId + '/posts:(creation-timestamp,title,summary,site-group-post-url)?count=0&start=0').result(fCount);
+			}
 		}
 	});
 	writeSettings();

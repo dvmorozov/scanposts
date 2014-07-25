@@ -25,10 +25,12 @@
 	<script type="text/javascript" src="LoadData.js"></script>
 </head>
 <body class="yui3-skin-sam	yui-skin-sam">
-	<ul class="nav nav-tabs" role="tablist">
-		<li><a href="Settings.html">Keywords</a></li>
-		<li class="active"><a href="LinkedIn.html">Messages</a></li>
-	</ul>
+	<div>
+		<ul class="nav nav-pills">
+			<li><a href="Settings.html">Keywords</a></li>
+			<li class="active"><a href="LinkedIn.html">Messages&nbsp;&nbsp;<span class="badge pull-right" id="selected">Selected</span><span class="badge pull-right" id="new">New</span></a></li>
+		</ul>
+	</div>
 	<div id="search">
 	</div>
 	<script type="IN/Login" data-onauth="loadData"></script>
