@@ -43,10 +43,19 @@ function writeSettings() {
 
 var requestNumber = 0;
 
+function showErrorMessage(error) {
+	document.getElementById('modalErrorTitle').innerHTML = 'Error ' + error.status;
+	document.getElementById('modalErrorMessage').innerHTML = error.message;
+	$('#myModal').modal({
+		keyboard: true
+	});
+}
+
 //	Loads list of groups.
 function loadItems(forChunk, completed, request, start, count) {
 
 	var f = function (result) {
+
 		if (isDefined(result)) {
 			//	Makes something with the chunk.
 			forChunk(result);
@@ -68,10 +77,10 @@ function loadItems(forChunk, completed, request, start, count) {
 			if (isDefined(completed)) completed();
 		} else
 			if (requestNumber++ < settings.maxRequestNum)
-				IN.API.Raw(request + '?count=' + count + '&start=' + start).result(f);
+				IN.API.Raw(request + '?count=' + count + '&start=' + start).result(f).error(showErrorMessage);
 	} else
 		if (requestNumber++ < settings.maxRequestNum)
-			IN.API.Raw(request).result(f);
+			IN.API.Raw(request).result(f).error(showErrorMessage);
 }
 
 var groupList = {
