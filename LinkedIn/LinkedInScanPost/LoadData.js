@@ -21,18 +21,27 @@ function hasWord(text) {
 
 function readSettings() {
 	var text = $.cookie('settings');
-	if (isDefined(text))
+	if (isDefined(text)) {
 		settings = $.parseJSON(text);
-	//	Sets up default configuration.
-	else settings = {
-		words: [],
-		lastTimeStamp: null
-	}; ;
+		//	Sets default values.
+		if (!isDefined(settings.maxRequestNum))
+			settings.maxRequestNum = 10;
+	}
+		//	Sets up default configuration.
+	else
+		settings = {
+			words: [],
+			maxRequestNum: 10, 		//	Maximum limit of request number.
+			lastTimeStamp: null
+		};
+	;
 }
 
 function writeSettings() {
 	$.cookie('settings', JSON.stringify(settings));
 }
+
+var requestNumber = 0;
 
 //	Loads list of groups.
 function loadItems(forChunk, completed, request, start, count) {
@@ -58,9 +67,11 @@ function loadItems(forChunk, completed, request, start, count) {
 		if (count === 0) {
 			if (isDefined(completed)) completed();
 		} else
-			IN.API.Raw(request + '?count=' + count + '&start=' + start).result(f);
+			if (requestNumber++ < settings.maxRequestNum)
+				IN.API.Raw(request + '?count=' + count + '&start=' + start).result(f);
 	} else
-		IN.API.Raw(request).result(f);
+		if (requestNumber++ < settings.maxRequestNum)
+			IN.API.Raw(request).result(f);
 }
 
 var groupList = {
@@ -162,6 +173,7 @@ function loadData() {
 	readSettings();
 
 	//	Loads list of groups and associated posts.
+	requestNumber = 0;
 	loadGroups();
 
 	writeSettings();
