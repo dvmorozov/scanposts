@@ -24,42 +24,51 @@
 
 	<script type="text/javascript" src="LoadData.js"></script>
 </head>
-<body class="yui3-skin-sam	yui-skin-sam">
-	<div>
-		<ul class="nav nav-pills">
-			<li><a href="Settings.html">Keywords</a></li>
-			<li class="active">
-				<a href="LinkedIn.html">Messages&nbsp;&nbsp;
-					<span class="badge pull-right" id="selected">Selected</span>
-					<span class="badge pull-right" id="new">New</span>
-					<span class="badge pull-right" id="groups">Groups</span>
-				</a>
-			</li>
-		</ul>
-	</div>
-	<div id="search">
-	</div>
-	<!-- Error dialog -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalErrorDialog"
-		aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-					<h4 class="modal-title" id="modalErrorTitle">
-						Error!</h4>
+	<body class="yui3-skin-sam	yui-skin-sam">
+		<div class="center">
+			<div>
+				<ul class="nav nav-pills">
+					<li><a href="Settings.html">Keywords</a></li>
+					<li class="active">
+						<a href="LinkedIn.html">Messages</a>
+					</li>
+				</ul>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Totals&nbsp;&nbsp;
+						<span class="badge pull-right" id="selected">Selected</span>
+						<span class="badge pull-right" id="new">New</span>
+						<span class="badge pull-right" id="groups">Groups</span>
+					</h3>
 				</div>
-				<div class="modal-body">
-					<p id="modalErrorMessage"></p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" data-dismiss="modal">
-						Close</button>
+				<div class="panel-body">
+					<div id="search">
+					</div>
 				</div>
 			</div>
+			<!-- Error dialog -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalErrorDialog"
+				 aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+							<h4 class="modal-title" id="modalErrorTitle">
+								Error!</h4>
+						</div>
+						<div class="modal-body">
+							<p id="modalErrorMessage"></p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">
+								Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script type="IN/Login" data-onauth="loadData"></script>
 		</div>
-	</div>
-	<script type="IN/Login" data-onauth="loadData"></script>
-</body>
+	</body>
 </html>

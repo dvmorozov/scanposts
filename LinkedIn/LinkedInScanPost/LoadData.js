@@ -6,6 +6,13 @@ function isDefined(obj) {
 	else return false;
 }
 
+function timestampToString(timestamp) {
+	var newDate = new Date();
+	if (isDefined(timestamp))
+		newDate.setTime(timestamp);
+	return newDate.toUTCString();
+}
+
 function hasWord(text) {
 	if (!isDefined(text)) return false;
 	if (isDefined(settings) && isDefined(settings.words)) {
@@ -34,7 +41,10 @@ function readSettings() {
 			maxRequestNum: 10, 		//	Maximum limit of request number.
 			lastTimeStamp: null
 		};
-	;
+	var el = document.getElementById('last_visited_time');
+	
+	if (isDefined(el))
+		el.innerHTML = 'Last scanned ' + (isDefined(settings.lastTimeStamp) ? timestampToString(settings.lastTimeStamp) : 'never');
 }
 
 function writeSettings() {
@@ -110,7 +120,6 @@ var postList = {
 			
 			for (var j = 0; j < posts._count; j++) {
 				var summary = posts.values[j].summary;
-				var newDate = new Date();
 
 				if (isDefined(summary)) {
 					var hasWordInSummary = hasWord(summary);
@@ -129,8 +138,6 @@ var postList = {
 
 						var timestamp = posts.values[j].creationTimestamp;
 						if (isDefined(timestamp)) {
-							newDate.setTime(timestamp);
-
 							if (!isDefined(settings.lastTimeStamp) || timestamp > settings.lastTimeStamp)
 								settings.lastTimeStamp = timestamp;
 						}
@@ -146,7 +153,7 @@ var postList = {
 							posts.values[j].siteGroupPostUrl +
 							'"><img src="LinkedIn.jpg" alt="LinkedIn logo" height="32" width="32" /></a>';
 
-						text += '&nbsp;<span class="date">' + newDate.toUTCString() + '</span>';
+						text += '&nbsp;<span class="date">' + timestampToString(timestamp) + '</span>';
 						text += '</div></div>';
 
 						++postList.selected;
