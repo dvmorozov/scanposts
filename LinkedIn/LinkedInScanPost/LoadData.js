@@ -37,17 +37,11 @@ function createDefaultConfig() {
 function readSettings() {
 	var text = $.cookie('settings');
 	if (isDefined(text)) {
-		//try {
 		settings = $.parseJSON(text);
 		//	Sets default values.
-		var r = isDefined(settings.maxRequestNum);
-		if (r === false) {
+		if (!isDefined(settings.maxRequestNum)) {
 			settings.maxRequestNum = 10;
 		}
-		//} catch(e) {
-		//	createDefaultConfig();
-		//	showErrorMessage(e.message);
-		//}
 	}
 	//	Sets up default configuration.
 	else {
@@ -100,6 +94,9 @@ function loadItems(forChunk, completed, request, start, count) {
 		} else
 			if (requestNumber++ < settings.maxRequestNum)
 				IN.API.Raw(request + '?count=' + count + '&start=' + start).result(f).error(showErrorMessage);
+			else
+				//	Saves lastTimeStamp.
+				writeSettings();
 	} else
 		if (requestNumber++ < settings.maxRequestNum)
 			IN.API.Raw(request).result(f).error(showErrorMessage);
@@ -203,6 +200,4 @@ function loadData() {
 	//	Loads list of groups and associated posts.
 	requestNumber = 0;
 	loadGroups();
-
-	writeSettings();
 }
