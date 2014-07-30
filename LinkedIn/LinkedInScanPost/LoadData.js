@@ -26,23 +26,35 @@ function hasWord(text) {
 	return true;
 }
 
+function createDefaultConfig() {
+	settings = {
+		words: [],
+		maxRequestNum: 10, 		//	Maximum limit of request number.
+		lastTimeStamp: null
+	};
+}
+
 function readSettings() {
 	var text = $.cookie('settings');
 	if (isDefined(text)) {
+		//try {
 		settings = $.parseJSON(text);
 		//	Sets default values.
-		if (!isDefined(settings.maxRequestNum))
+		var r = isDefined(settings.maxRequestNum);
+		if (r === false) {
 			settings.maxRequestNum = 10;
+		}
+		//} catch(e) {
+		//	createDefaultConfig();
+		//	showErrorMessage(e.message);
+		//}
 	}
-		//	Sets up default configuration.
-	else
-		settings = {
-			words: [],
-			maxRequestNum: 10, 		//	Maximum limit of request number.
-			lastTimeStamp: null
-		};
+	//	Sets up default configuration.
+	else {
+		createDefaultConfig();
+	}
+
 	var el = document.getElementById('last_visited_time');
-	
 	if (isDefined(el))
 		el.innerHTML = 'Last scanned ' + (isDefined(settings.lastTimeStamp) ? timestampToString(settings.lastTimeStamp) : 'never');
 }
@@ -117,7 +129,7 @@ var postList = {
 		if (isDefined(posts) && isDefined(posts._count) && isDefined(posts.values)) {
 			postList.received += posts._count;
 			document.getElementById('new').innerHTML = 'New: ' + postList.received;
-			
+
 			for (var j = 0; j < posts._count; j++) {
 				var summary = posts.values[j].summary;
 
