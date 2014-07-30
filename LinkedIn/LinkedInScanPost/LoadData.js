@@ -34,6 +34,8 @@ function createDefaultConfig() {
 	};
 }
 
+var lastPostTimeStamp = null;
+
 function readSettings() {
 	var text = $.cookie('settings');
 	if (isDefined(text)) {
@@ -68,7 +70,13 @@ function showErrorMessage(error) {
 }
 
 //	Loads list of groups.
-function loadItems(forChunk, completed, request, start, count) {
+function loadItems(forChunk, completed, request, start, count, since) {
+
+	var finalizeLoading = function() {
+		//	Saves lastTimeStamp.
+		settings.lastTimeStamp = lastPostTimeStamp;
+		writeSettings();
+	};
 
 	var f = function (result) {
 
@@ -80,7 +88,7 @@ function loadItems(forChunk, completed, request, start, count) {
 				var newStart = result._start + result._count;
 				//	The requested count must be always fixed, otherwise LinkedIn sometimes stops reply.
 				var newCount = (/*result._count*/10 < result._total - newStart ? /*result._count*/10 : result._total - newStart);
-				loadItems(forChunk, completed, request, newStart, newCount);
+				loadItems(forChunk, completed, request, newStart, newCount, since);
 			}
 			//	If there is only one chunk LinkedIn does not return _count.
 			else
@@ -90,16 +98,15 @@ function loadItems(forChunk, completed, request, start, count) {
 
 	if (isDefined(count) && isDefined(start)) {
 		if (count === 0) {
+			finalizeLoading();
 			if (isDefined(completed)) completed();
-		} else
-			if (requestNumber++ < settings.maxRequestNum)
-				IN.API.Raw(request + '?count=' + count + '&start=' + start).result(f).error(showErrorMessage);
-			else
-				//	Saves lastTimeStamp.
-				writeSettings();
+		} else if (requestNumber++ < settings.maxRequestNum)
+			IN.API.Raw(request + '?count=' + count + '&start=' + start +
+				(isDefined(since) ? '&modified-since=' + since : '')).result(f).error(showErrorMessage);
+		else finalizeLoading();
 	} else
 		if (requestNumber++ < settings.maxRequestNum)
-			IN.API.Raw(request).result(f).error(showErrorMessage);
+			IN.API.Raw(request + (isDefined(since) ? '?modified-since=' + since : '')).result(f).error(showErrorMessage);
 }
 
 var groupList = {
@@ -147,8 +154,8 @@ var postList = {
 
 						var timestamp = posts.values[j].creationTimestamp;
 						if (isDefined(timestamp)) {
-							if (!isDefined(settings.lastTimeStamp) || timestamp > settings.lastTimeStamp)
-								settings.lastTimeStamp = timestamp;
+							if (!isDefined(lastPostTimeStamp) || timestamp > lastPostTimeStamp)
+								lastPostTimeStamp = timestamp;
 						}
 
 						text = '<div class="panel panel-primary">';
@@ -190,7 +197,7 @@ function loadPosts() {
 		var groupId = groupList.groups[postList.groupIndex++].group.id;
 
 		if (isDefined(groupId))
-			loadItems(postList.load, postList.completed, '/groups/' + groupId + '/posts:(creation-timestamp,title,summary,site-group-post-url)');
+			loadItems(postList.load, postList.completed, '/groups/' + groupId + '/posts:(creation-timestamp,title,summary,site-group-post-url)', null, null, settings.lastTimeStamp);
 	}
 }
 
