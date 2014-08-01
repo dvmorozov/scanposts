@@ -24,9 +24,13 @@
 
 	<script type="text/javascript" src="LoadData.js"></script>
 </head>
-	<body class="yui3-skin-sam	yui-skin-sam">
+	<body class="yui3-skin-sam	yui-skin-sam" onload="$('#linkedin_login').height($('#navigation').height());">
 		<div class="center">
-			<div>
+			<div style="text-align: right; position: absolute; width: inherit;" id="linkedin_login">
+				<script type="IN/Login" data-onauth="loadData"></script>
+			</div>
+
+			<div id="navigation">
 				<ul class="nav nav-pills">
 					<li><a href="Settings.html">Keywords</a></li>
 					<li class="active">
@@ -34,6 +38,7 @@
 					</li>
 				</ul>
 			</div>
+
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Totals&nbsp;&nbsp;
@@ -47,6 +52,7 @@
 					</div>
 				</div>
 			</div>
+
 			<!-- Error dialog -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalErrorDialog"
 				 aria-hidden="true">
@@ -68,7 +74,7 @@
 					</div>
 				</div>
 			</div>
-			<script type="IN/Login" data-onauth="loadData"></script>
+
 		</div>
 	</body>
 </html>
