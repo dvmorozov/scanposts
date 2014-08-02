@@ -40,6 +40,9 @@ function readSettings() {
 	var text = $.cookie('settings');
 	if (isDefined(text)) {
 		settings = $.parseJSON(text);
+		if (!isDefined(settings))
+			createDefaultConfig();
+		else
 		//	Sets default values.
 		if (!isDefined(settings.maxRequestNum)) {
 			settings.maxRequestNum = 10;
@@ -62,11 +65,9 @@ function writeSettings() {
 var requestNumber = 0;
 
 function showErrorMessage(error) {
-	document.getElementById('modalErrorTitle').innerHTML = 'Error ' + error.status;
-	document.getElementById('modalErrorMessage').innerHTML = error.message;
-	$('#myModal').modal({
-		keyboard: true
-	});
+	if (isDefined(page) && isDefined(page.showErrorMessage)) {
+		page.showErrorMessage(error);
+	}
 }
 
 //	Loads list of groups.
@@ -102,7 +103,7 @@ function loadItems(forChunk, completed, request, start, count, since) {
 			if (isDefined(completed)) completed();
 		} else if (requestNumber++ < settings.maxRequestNum)
 			IN.API.Raw(request + '?count=' + count + '&start=' + start +
-				(isDefined(since) ? '&modified-since=' + since : '')).result(f).error(showErrorMessage);
+			(isDefined(since) ? '&modified-since=' + since : '')).result(f).error(showErrorMessage);
 		else finalizeLoading();
 	} else
 		if (requestNumber++ < settings.maxRequestNum)
