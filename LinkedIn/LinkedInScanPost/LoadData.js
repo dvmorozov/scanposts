@@ -15,7 +15,7 @@ function timestampToString(timestamp) {
 
 function hasWord(text) {
 	if (!isDefined(text)) return false;
-	if (isDefined(settings) && isDefined(settings.words)) {
+	if (isDefined(settings) && isDefined(settings.words) && (settings.words.length !== 0)) {
 		for (var i = 0; i < settings.words.length; i++) {
 			if (text.search(new RegExp(settings.words[i], 'i')) !== -1)
 				return true;
@@ -175,7 +175,10 @@ var postList = {
 
 						++postList.selected;
 						document.getElementById('selected').innerHTML = 'Selected: ' + postList.selected;
+
 						$("#search").append(text);
+
+						updateParentHeight();
 					}
 				}
 			}
@@ -208,4 +211,13 @@ function loadData() {
 	//	Loads list of groups and associated posts.
 	requestNumber = 0;
 	loadGroups();
+}
+
+function authLinkedIn() {
+	IN.User.authorize(function () { this.loadData(); });
+}
+
+function updateParentHeight() {
+	if(isDefined(window.parent))
+		window.parent.postMessage(document.body.scrollHeight, "http://scanposts.azurewebsites.net");
 }
