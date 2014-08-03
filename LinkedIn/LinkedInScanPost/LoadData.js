@@ -55,7 +55,7 @@ function readSettings() {
 
 	var el = document.getElementById('last_visited_time');
 	if (isDefined(el))
-		el.innerHTML = 'Last scanned ' + (isDefined(settings.lastTimeStamp) ? timestampToString(settings.lastTimeStamp) : 'never');
+		el.innerHTML = (isDefined(settings.lastTimeStamp) ? 'Last scanned at ' + timestampToString(settings.lastTimeStamp) : 'Not scanned yet');
 }
 
 function writeSettings() {
