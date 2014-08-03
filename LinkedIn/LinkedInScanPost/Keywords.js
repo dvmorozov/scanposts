@@ -5,7 +5,7 @@ function showKeywordList() {
 
 		for (var i = 0; i < settings.words.length; i++) {
 			$("#keywords").append(
-				'<li class="list-group-item">' +
+				'<div class="list-group-item">' +
 				'<div class="input-group">' +
 					'<span class="input-group-btn">' +
 						'<button type="button" class="btn btn-default" onclick="onDeleteClick(' + i + ');">' +
@@ -13,10 +13,11 @@ function showKeywordList() {
 						'</button>' +
 						'<span style="font-size: initial; vertical-align: middle; margin-left: 10px;">' + settings.words[i] + '</span>' +
 					'</span>' +
-				'</div></li>'
+				'</div></div>'
 			);
 		}
 	}
+	updateParentHeight();
 }
 
 function onDeleteClick(index) {

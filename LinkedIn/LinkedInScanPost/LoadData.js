@@ -176,7 +176,7 @@ var postList = {
 						++postList.selected;
 						document.getElementById('selected').innerHTML = 'Selected: ' + postList.selected;
 
-						$("#search").append(text);
+						$("#posts").append(text);
 
 						updateParentHeight();
 					}
