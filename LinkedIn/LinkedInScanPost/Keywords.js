@@ -5,15 +5,16 @@ function showKeywordList() {
 
 		for (var i = 0; i < settings.words.length; i++) {
 			$("#keywords").append(
-				'<div class="list-group-item">' +
-				'<div class="input-group">' +
-					'<span class="input-group-btn">' +
-						'<button type="button" class="btn btn-default" onclick="onDeleteClick(' + i + ');">' +
-							'<span class="glyphicon glyphicon-trash"></span>' +
-						'</button>' +
-						'<span style="font-size: initial; vertical-align: middle; margin-left: 10px;">' + settings.words[i] + '</span>' +
-					'</span>' +
-				'</div></div>'
+				'<li class="list-group-item">' +
+					'<div class="input-group">' +
+						'<span class="input-group-btn">' +
+							'<button type="button" class="btn btn-default" onclick="onDeleteClick(' + i + ');">' +
+								'<span class="glyphicon glyphicon-trash"></span>' +
+							'</button>' +
+							'<span style="font-size: medium; vertical-align: middle; margin-left: 10px;">' + settings.words[i] + '</span>' +
+						'</span>' +
+					'</div>' +
+				'</li>'
 			);
 		}
 	}
