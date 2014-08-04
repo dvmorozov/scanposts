@@ -217,6 +217,12 @@ function authLinkedIn() {
 	IN.User.authorize(function () { this.loadData(); });
 }
 
+function linkedInLogout() {
+	IN.User.logout(function () {
+		document.getElementById('posts').empty();
+	});
+}
+
 function updateParentHeight() {
 	if(isDefined(window.parent))
 		window.parent.postMessage(document.body.scrollHeight, "http://scanposts.azurewebsites.net");

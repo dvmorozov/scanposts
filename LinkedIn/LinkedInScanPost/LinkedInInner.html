@@ -31,6 +31,15 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 	<script type="text/javascript" src="LoadData.js"></script>
+	<script type="text/javascript">
+		var messageEventHandler = function (event) {
+			if ((event.origin === 'http://scanposts.azurewebsites.net') && (event.data === 'linkedInLogout')) {
+				linkedInLogout();
+			}
+		};
+
+		(function() { window.addEventListener('message', messageEventHandler, false); })();
+	</script>
 </head>
 	<body class="yui3-skin-sam	yui-skin-sam" onload="authLinkedIn();">
 		<div class="panel panel-default">
