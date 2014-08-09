@@ -42,7 +42,7 @@
 	</script>
 </head>
 	<body class="yui3-skin-sam	yui-skin-sam" onload="authLinkedIn();">
-		<div class="panel panel-default">
+		<div class="panel panel-default" id="panel_posts">
 			<div class="panel-heading">
 				<h3 class="panel-title">Totals
 					<span class="badge pull-right" id="selected" style="margin-left: 5px;">Selected</span>
@@ -54,6 +54,12 @@
 				<div id="posts">
 				</div>
 			</div>
+		</div>
+		
+		<div class="jumbotron" style="visibility: hidden;" id="panel_login">
+			<h1>Authentication required!</h1>
+			<p>You should log into LinkedIn to see the posts.</p>
+			<p><a class="btn btn-primary btn-lg" role="button" onclick="authLinkedIn();">Log In</a></p>
 		</div>
 	</body>
 </html>

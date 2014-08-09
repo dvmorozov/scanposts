@@ -214,16 +214,25 @@ function loadData() {
 }
 
 function authLinkedIn() {
-	IN.User.authorize(function () { this.loadData(); });
+	IN.User.authorize(function() {
+		this.loadData();
+		document.getElementById('panel_posts').style.visibility = 'visible';
+		document.getElementById('panel_login').style.visibility = 'hidden';
+	});
 }
 
 function linkedInLogout() {
 	IN.User.logout(function () {
 		document.getElementById('posts').innerHTML = "";
+		document.getElementById('panel_posts').style.visibility = 'hidden';
+		document.getElementById('panel_login').style.visibility = 'visible';
+		updateParentHeight();
 	});
 }
 
 function updateParentHeight() {
-	if(isDefined(window.parent))
+	if (isDefined(window.parent)) {
+		console.log('updateParentHeight: document.body.scrollHeight');
 		window.parent.postMessage(document.body.scrollHeight, "http://townbreath.com");
+	}
 }
