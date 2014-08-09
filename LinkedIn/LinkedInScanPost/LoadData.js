@@ -219,11 +219,11 @@ function authLinkedIn() {
 
 function linkedInLogout() {
 	IN.User.logout(function () {
-		document.getElementById('posts').empty();
+		document.getElementById('posts').innerHTML = "";
 	});
 }
 
 function updateParentHeight() {
 	if(isDefined(window.parent))
-		window.parent.postMessage(document.body.scrollHeight, "http://scanposts.azurewebsites.net");
+		window.parent.postMessage(document.body.scrollHeight, "http://townbreath.com");
 }
