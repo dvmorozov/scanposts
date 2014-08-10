@@ -6,9 +6,18 @@ function initMessageHandling() {
 		console.log('resizeIframe: ' + data);
 	}
 
+	function openUrl(url) {
+		var win = window.open(url, '_blank');
+		win.focus();
+		console.log('openUrl: ' + url);
+	}
+
 	var messageEventHandler = function (event) {
 		if (event.origin === 'http://stat.townbreath.com') {
-			resizeIframe(event.data);
+			if (typeof event.data === "number")
+				resizeIframe(event.data);
+			else if (typeof event.data === "string")
+				openUrl(event.data);
 		}
 	};
 

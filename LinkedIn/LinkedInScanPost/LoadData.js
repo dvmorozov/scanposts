@@ -173,7 +173,7 @@ var postList = {
 						text += '<div class="panel-body"><div class="summary">' + summary + '</div></div>';
 
 						text += '<div class="panel-footer">';
-						text += '<a class="url" style="" href="openPost(\'' +
+						text += '<a class="url" href="#" onclick="openPost(\'' +
 							posts.values[j].siteGroupPostUrl +
 							'\');"><img src="LinkedIn.jpg" alt="LinkedIn logo" height="32" width="32" /></a>';
 
