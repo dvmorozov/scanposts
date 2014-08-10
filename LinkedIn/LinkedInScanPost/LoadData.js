@@ -73,10 +73,12 @@ function showErrorMessage(error) {
 //	Loads list of groups.
 function loadItems(forChunk, completed, request, start, count, since) {
 
-	var finalizeLoading = function() {
+	var finalizeLoading = function () {
 		//	Saves lastTimeStamp.
 		settings.lastTimeStamp = lastPostTimeStamp;
 		writeSettings();
+		//	Must be called after finish of downloading.
+		highlightKeywords();
 	};
 
 	var f = function (result) {
@@ -124,6 +126,13 @@ var groupList = {
 	}
 };
 
+function highlightKeywords() {
+	for (var i in settings.words) {
+		var word = settings.words[i];
+		$(".summary").highlight(word);
+	}
+}
+
 var postList = {
 	groupIndex: 0,
 	received: 0,
@@ -143,15 +152,6 @@ var postList = {
 
 					if ((isDefined(posts.values[j].title) && hasWord(posts.values[j].title)) ||
 						hasWordInSummary) {
-						if (hasWordInSummary) {
-							//	Marks out the keywords.
-							for (var k = 0; k < settings.words.length; k++) {
-								var keyword = settings.words[k];
-
-								summary = summary.replace(keyword,
-									'<span class="keyword">' + keyword + '</span>');
-							}
-						}
 
 						var timestamp = posts.values[j].creationTimestamp;
 						if (isDefined(timestamp)) {
@@ -163,7 +163,7 @@ var postList = {
 						text += '<div class="panel-heading"><h3 class="panel-title">' +
 							posts.values[j].title + '</h3></div>';
 
-						text += '<div class="panel-body">' + summary + '</div>';
+						text += '<div class="panel-body"><div class="summary">' + summary + '</div></div>';
 
 						text += '<div class="panel-footer">';
 						text += '<a class="url" style="" href="' +
