@@ -133,6 +133,13 @@ function highlightKeywords() {
 	}
 }
 
+function openPost(url) {
+	if (isDefined(window.parent)) {
+		console.log('open post: ' + url);
+		window.parent.postMessage(url, "http://townbreath.com");
+	}
+}
+
 var postList = {
 	groupIndex: 0,
 	received: 0,
@@ -166,9 +173,9 @@ var postList = {
 						text += '<div class="panel-body"><div class="summary">' + summary + '</div></div>';
 
 						text += '<div class="panel-footer">';
-						text += '<a class="url" style="" href="' +
+						text += '<a class="url" style="" href="openPost(\'' +
 							posts.values[j].siteGroupPostUrl +
-							'"><img src="LinkedIn.jpg" alt="LinkedIn logo" height="32" width="32" /></a>';
+							'\');"><img src="LinkedIn.jpg" alt="LinkedIn logo" height="32" width="32" /></a>';
 
 						text += '&nbsp;<span class="date">' + timestampToString(timestamp) + '</span>';
 						text += '</div></div>';
