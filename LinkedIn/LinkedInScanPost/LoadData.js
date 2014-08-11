@@ -1,6 +1,4 @@
 ﻿
-var settings = null;
-
 function isDefined(obj) {
 	if (obj !== undefined && obj !== null) return true;
 	else return false;
@@ -26,42 +24,7 @@ function hasWord(text) {
 	return true;
 }
 
-function createDefaultConfig() {
-	settings = {
-		words: [],
-		maxRequestNum: 10, 		//	Maximum limit of request number.
-		lastTimeStamp: null
-	};
-}
-
 var lastPostTimeStamp = null;
-
-function readSettings() {
-	var text = $.cookie('settings');
-	if (isDefined(text)) {
-		settings = $.parseJSON(text);
-		if (!isDefined(settings))
-			createDefaultConfig();
-		else
-		//	Sets default values.
-		if (!isDefined(settings.maxRequestNum)) {
-			settings.maxRequestNum = 10;
-		}
-	}
-	//	Sets up default configuration.
-	else {
-		createDefaultConfig();
-	}
-
-	var el = document.getElementById('last_visited_time');
-	if (isDefined(el))
-		el.innerHTML = (isDefined(settings.lastTimeStamp) ? 'Last scanned at ' + timestampToString(settings.lastTimeStamp) : 'Not scanned yet');
-}
-
-function writeSettings() {
-	$.cookie('settings', JSON.stringify(settings));
-}
-
 var requestNumber = 0;
 
 function showErrorMessage(error) {
@@ -122,6 +85,8 @@ var groupList = {
 	},
 
 	completed: function () {
+		console.log('group found: ' + groupList.groups.length);
+
 		loadPosts();
 	}
 };
