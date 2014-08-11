@@ -193,8 +193,6 @@ var postList = {
 	},
 
 	completed: function () {
-		//	Show progress group by group.
-		document.getElementById('groups').innerHTML = 'Groups: ' + ++postList.scannedGroups;
 		loadPosts();
 	}
 };
@@ -205,6 +203,9 @@ function loadGroups() {
 
 function loadPosts() {
 	if (postList.groupIndex < groupList.groups.length) {
+		//	Show progress group by group.
+		document.getElementById('groups').innerHTML = 'Groups: ' + ++postList.scannedGroups;
+
 		var groupId = groupList.groups[postList.groupIndex++].group.id;
 
 		if (isDefined(groupId))
