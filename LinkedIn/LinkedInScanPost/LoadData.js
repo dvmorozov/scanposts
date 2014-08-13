@@ -86,7 +86,7 @@ var groupList = {
 
 	completed: function () {
 		console.log('group found: ' + groupList.groups.length);
-
+		updateGroups(groupList.groups);
 		loadPosts();
 	}
 };
