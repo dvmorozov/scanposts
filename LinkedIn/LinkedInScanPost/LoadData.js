@@ -86,7 +86,17 @@ var groupList = {
 
 	completed: function () {
 		console.log('group found: ' + groupList.groups.length);
-		updateGroups(groupList.groups);
+
+		var f = function (groupList) {
+			var result = [];
+			for (var i = 0; i < groupList.length; i++) {
+				var g = groupList[i];
+				result.push(g.group.id);
+			}
+			return result;
+		};
+
+		updateGroups(f(groupList.groups));
 		loadPosts();
 	}
 };
@@ -106,7 +116,6 @@ function openPost(url) {
 }
 
 var postList = {
-	groupIndex: 0,
 	received: 0,
 	selected: 0,
 	scannedGroups: 0,
@@ -167,14 +176,20 @@ function loadGroups() {
 }
 
 function loadPosts() {
-	if (postList.groupIndex < groupList.groups.length) {
+	var group = setNextGroup();
+
+	if (isDefined(group)) {
 		//	Show progress group by group.
 		document.getElementById('groups').innerHTML = 'Groups: ' + ++postList.scannedGroups;
 
-		var groupId = groupList.groups[postList.groupIndex++].group.id;
+		var groupId = group;
 
-		if (isDefined(groupId))
+		if (isDefined(groupId)) {
+			console.log('loading posts for ');
+			console.log(group);
+
 			loadItems(postList.load, postList.completed, '/groups/' + groupId + '/posts:(creation-timestamp,title,summary,site-group-post-url)', null, null, settings.lastTimeStamp);
+		}
 	}
 }
 
