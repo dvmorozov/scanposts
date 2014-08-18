@@ -22,18 +22,26 @@
 		scope: rw_groups
 		authorize: true
 	</script>
-	
-	<script>
-		var page = {
-			showErrorMessage: function (error) {
-				alert(error);
-			}
-		}
-	</script>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	
 	<script type="text/javascript" src="Settings.js"></script>
 	<script type="text/javascript" src="LoadData.js"></script>
+	<script type="text/javascript" src="Pages.js"></script>
+
+	<script>
+		var page = {
+			showErrorMessage: function (error) {
+				alert(error);
+			},
+
+			openPost: function (url) {
+				if (isDefined(window.parent)) {
+					console.log('open post: ' + url);
+					window.parent.postMessage(url, "http://townbreath.com");
+				}
+			}
+		}
+	</script>
 
 	<script type="text/javascript">
 		var messageEventHandler = function (event) {

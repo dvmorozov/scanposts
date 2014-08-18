@@ -1,15 +1,15 @@
 ﻿
+function openUrl(url) {
+	var win = window.open(url, '_blank');
+	win.focus();
+	console.log('openUrl: ' + url);
+}
+
 function initMessageHandling() {
 
 	function resizeIframe(data) {
 		document.getElementById('iframe').style.height = data + 'px';
 		console.log('resizeIframe: ' + data);
-	}
-
-	function openUrl(url) {
-		var win = window.open(url, '_blank');
-		win.focus();
-		console.log('openUrl: ' + url);
 	}
 
 	var messageEventHandler = function (event) {

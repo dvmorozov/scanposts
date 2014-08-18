@@ -22,22 +22,27 @@
 		scope: rw_groups
 		authorize: true
 	</script>
-	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<script type="text/javascript" src="Settings.js"></script>
+	<script type="text/javascript" src="LoadData.js"></script>
+	<script type="text/javascript" src="Pages.js"></script>
+
 	<script>
 		var page = {
-			showErrorMessage: function (error){
+			showErrorMessage: function (error) {
 				document.getElementById('modalErrorTitle').innerHTML = 'Error ' + error.status;
 				document.getElementById('modalErrorMessage').innerHTML = error.message;
 				$('#myModal').modal({
 					keyboard: true
 				});
+			},
+
+			openPost: function (url) {
+				openUrl(url);
 			}
 		}
 	</script>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-	<script type="text/javascript" src="Settings.js"></script>
-	<script type="text/javascript" src="LoadData.js"></script>
 </head>
 	<body class="yui3-skin-sam	yui-skin-sam" onload="$('#linkedin_login').height($('#navigation').height());">
 		<div class="center">
