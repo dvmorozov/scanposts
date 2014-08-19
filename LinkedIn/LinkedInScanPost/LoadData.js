@@ -66,12 +66,12 @@ function loadItems(forChunk, completed, request, start, count, since) {
 		if (count === 0) {
 			finalizeLoading();
 			if (isDefined(completed)) completed();
-		} else if (requestNumber++ < settings.maxRequestNum)
+		} else if (requestNumber++ < staticSettings.maxRequestNum)
 			IN.API.Raw(request + '?count=' + count + '&start=' + start +
 			(isDefined(since) ? '&modified-since=' + since : '')).result(f).error(showErrorMessage);
 		else finalizeLoading();
 	} else
-		if (requestNumber++ < settings.maxRequestNum)
+		if (requestNumber++ < staticSettings.maxRequestNum)
 			IN.API.Raw(request + (isDefined(since) ? '?modified-since=' + since : '')).result(f).error(showErrorMessage);
 }
 

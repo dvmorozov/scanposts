@@ -1,10 +1,15 @@
 ﻿
 var settings = null;
 
+var staticSettings = {
+	maxRequestNum: 10, 		//	Maximum limit of request number.
+	useMaxRequestNum: false,
+	maxPostNum: 50
+};
+
 function createDefaultConfig() {
 	settings = {
 		words: [],
-		maxRequestNum: 10, 		//	Maximum limit of request number.
 		lastTimeStamp: null
 	};
 
@@ -142,11 +147,6 @@ function readSettings() {
 		settings = $.parseJSON(text);
 		if (!isDefined(settings))
 			createDefaultConfig();
-		else
-		//	Sets default values.
-			if (!isDefined(settings.maxRequestNum)) {
-				settings.maxRequestNum = 10;
-			}
 	}
 	//	Sets up default configuration.
 	else {
