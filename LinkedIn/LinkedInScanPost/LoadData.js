@@ -25,7 +25,6 @@ function hasWord(text) {
 }
 
 var lastPostTimeStamp = null;
-var requestNumber = 0;
 
 function showErrorMessage(error) {
 	if (isDefined(page) && isDefined(page.showErrorMessage)) {
@@ -66,12 +65,12 @@ function loadItems(forChunk, completed, request, start, count, since) {
 		if (count === 0) {
 			finalizeLoading();
 			if (isDefined(completed)) completed();
-		} else if (requestNumber++ < staticSettings.maxRequestNum)
+		} else if (!staticSettings.requestDisabled())
 			IN.API.Raw(request + '?count=' + count + '&start=' + start +
 			(isDefined(since) ? '&modified-since=' + since : '')).result(f).error(showErrorMessage);
 		else finalizeLoading();
 	} else
-		if (requestNumber++ < staticSettings.maxRequestNum)
+		if (!staticSettings.requestDisabled())
 			IN.API.Raw(request + (isDefined(since) ? '?modified-since=' + since : '')).result(f).error(showErrorMessage);
 }
 
@@ -190,7 +189,7 @@ function loadData() {
 	readSettings();
 
 	//	Loads list of groups and associated posts.
-	requestNumber = 0;
+	staticSettings.requestNumber = 0;
 	loadGroups();
 }
 

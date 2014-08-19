@@ -4,7 +4,19 @@ var settings = null;
 var staticSettings = {
 	maxRequestNum: 10, 		//	Maximum limit of request number.
 	useMaxRequestNum: false,
-	maxPostNum: 50
+	maxPostNum: 50,
+	requestNumber: 0,
+
+	requestDisabled: function () {
+		if (staticSettings.useMaxRequestNum) {
+			if (staticSettings.requestNumber < staticSettings.maxRequestNum) {
+				staticSettings.requestNumber++;
+				return false;
+			} else return true;
+		} else {
+			return false;
+		}
+	}
 };
 
 function createDefaultConfig() {
