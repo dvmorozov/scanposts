@@ -16,8 +16,9 @@ function initMessageHandling() {
 		if (event.origin === 'http://stat.townbreath.com') {
 			if (typeof event.data === "number")
 				resizeIframe(event.data);
-			else if (typeof event.data === "string")
+			else if (typeof event.data === "string") {
 				openUrl(event.data);
+			}
 		}
 	};
 
@@ -28,3 +29,8 @@ function initMessageHandling() {
 function linkedInLogoutClick() {
 	document.getElementById('iframe').contentWindow.postMessage('linkedInLogout', 'http://stat.townbreath.com');
 }
+
+function linkedInFindMoreClick() {
+	document.getElementById('iframe').contentWindow.postMessage('linkedInFindMore', 'http://stat.townbreath.com');	
+}
+

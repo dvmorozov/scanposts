@@ -202,15 +202,6 @@ function authLinkedIn() {
 	});
 }
 
-function linkedInLogout() {
-	IN.User.logout(function () {
-		document.getElementById('posts').innerHTML = "";
-		document.getElementById('panel_posts').style.visibility = 'hidden';
-		document.getElementById('panel_login').style.visibility = 'visible';
-		updateParentHeight();
-	});
-}
-
 function updateParentHeight() {
 	if (isDefined(window.parent)) {
 		console.log('updateParentHeight: document.body.scrollHeight');

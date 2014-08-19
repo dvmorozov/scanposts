@@ -39,14 +39,30 @@
 					console.log('open post: ' + url);
 					window.parent.postMessage(url, "http://townbreath.com");
 				}
+			},
+
+			linkedInLogout: function () {
+				IN.User.logout(function () {
+					document.getElementById('posts').innerHTML = "";
+					document.getElementById('panel_posts').style.visibility = 'hidden';
+					document.getElementById('panel_login').style.visibility = 'visible';
+					updateParentHeight();
+				});
+			},
+
+			linkedInFindMore: function () {
+				window.location.reload(true);
 			}
 		}
 	</script>
 
 	<script type="text/javascript">
 		var messageEventHandler = function (event) {
-			if ((event.origin === 'http://townbreath.com') && (event.data === 'linkedInLogout')) {
-				linkedInLogout();
+			if ((event.origin === 'http://townbreath.com')) {
+				if (event.data === 'linkedInLogout')
+					page.linkedInLogout();
+				else if (event.data === 'linkedInFindMore')
+					page.linkedInFindMore();
 			}
 		};
 
