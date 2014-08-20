@@ -152,6 +152,7 @@ var postList = {
 						$("#posts").append(text);
 
 						updateParentHeight();
+						staticSettings.incPostNumber();
 					}
 				}
 			}

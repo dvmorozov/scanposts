@@ -4,18 +4,26 @@ var settings = null;
 var staticSettings = {
 	maxRequestNum: 10, 		//	Maximum limit of request number.
 	useMaxRequestNum: false,
-	maxPostNum: 50,
 	requestNumber: 0,
 
-	requestDisabled: function () {
+	maxPostNum: 50, 		//	Maximum limit of output post number (the real number of posts can exceed this by the rest of chunk).
+	postNumber: 0,
+
+	requestDisabled: function() {
 		if (staticSettings.useMaxRequestNum) {
 			if (staticSettings.requestNumber < staticSettings.maxRequestNum) {
 				staticSettings.requestNumber++;
 				return false;
 			} else return true;
 		} else {
-			return false;
+			if (staticSettings.postNumber < staticSettings.maxPostNum)
+				return false;
+			else return true;
 		}
+	},
+
+	incPostNumber: function () {
+		staticSettings.postNumber++;
 	}
 };
 
@@ -113,7 +121,7 @@ function updateGroups(currentGroupList) {
 		console.log(settings);
 
 		//	Resets cycle.
-		//settings.prevScanQueues.startGroup = null;
+		settings.prevScanQueues.startGroup = null;
 
 		writeSettings();
 	}
@@ -144,8 +152,8 @@ function setNextGroup() {
 		settings.prevScanQueues.startGroup = group;
 	} else if (settings.prevScanQueues.startGroup === group) {
 		//	Stops the cycle.
-		//console.log('group scanning cycle finished...');
-		//return null;
+		console.log('group scanning cycle finished...');
+		return null;
 	}
 
 	writeSettings();
