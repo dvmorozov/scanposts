@@ -178,7 +178,7 @@ function readSettings() {
 
 	var el = document.getElementById('last_visited_time');
 	if (isDefined(el))
-		el.innerHTML = (isDefined(settings.lastTimeStamp) ? 'Last scanned at ' + timestampToString(settings.lastTimeStamp) : 'Not scanned yet');
+		el.innerHTML = (isDefined(settings.lastTimeStamp) ? 'Last post at ' + timestampToString(settings.lastTimeStamp) : 'Not scanned yet');
 }
 
 function writeSettings() {
