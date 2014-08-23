@@ -3,7 +3,7 @@ var settings = null;
 
 var staticSettings = {
 	maxRequestNum: 10, 		//	Maximum limit of request number.
-	useMaxRequestNum: false,
+	useMaxRequestNum: true,
 	requestNumber: 0,
 
 	maxPostNum: 50, 		//	Maximum limit of output post number (the real number of posts can exceed this by the rest of chunk).

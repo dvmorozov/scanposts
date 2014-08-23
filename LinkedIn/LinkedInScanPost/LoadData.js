@@ -32,16 +32,8 @@ function showErrorMessage(error) {
 	}
 }
 
-//	Loads list of groups.
-function loadItems(forChunk, completed, request, start, count, since) {
-
-	var finalizeLoading = function () {
-		//	Saves lastTimeStamp.
-		settings.lastTimeStamp = lastPostTimeStamp;
-		writeSettings();
-		//	Must be called after finish of downloading.
-		highlightKeywords();
-	};
+//	Loads list of items.
+function loadItems(forChunk, completed, request, start, count, since, terminated) {
 
 	var f = function (result) {
 
@@ -53,7 +45,7 @@ function loadItems(forChunk, completed, request, start, count, since) {
 				var newStart = result._start + result._count;
 				//	The requested count must be always fixed, otherwise LinkedIn sometimes stops reply.
 				var newCount = (/*result._count*/10 < result._total - newStart ? /*result._count*/10 : result._total - newStart);
-				loadItems(forChunk, completed, request, newStart, newCount, since);
+				loadItems(forChunk, completed, request, newStart, newCount, since, terminated);
 			}
 			//	If there is only one chunk LinkedIn does not return _count.
 			else
@@ -61,17 +53,23 @@ function loadItems(forChunk, completed, request, start, count, since) {
 		}
 	};
 
+	console.log('since: ' + since);
+
 	if (isDefined(count) && isDefined(start)) {
 		if (count === 0) {
-			finalizeLoading();
 			if (isDefined(completed)) completed();
 		} else if (!staticSettings.requestDisabled())
 			IN.API.Raw(request + '?count=' + count + '&start=' + start +
-			(isDefined(since) ? '&modified-since=' + since : '')).result(f).error(showErrorMessage);
-		else finalizeLoading();
+				(isDefined(since) ? '&modified-since=' + since : '')).result(f).error(showErrorMessage);
+		else
+			if (isDefined(terminated))
+				terminated();
 	} else
 		if (!staticSettings.requestDisabled())
 			IN.API.Raw(request + (isDefined(since) ? '?modified-since=' + since : '')).result(f).error(showErrorMessage);
+		else
+			if (isDefined(terminated))
+				terminated();
 }
 
 var groupList = {
@@ -161,6 +159,16 @@ var postList = {
 
 	completed: function () {
 		loadPosts();
+	},
+
+	//	Called when loading process was interrupted.
+	terminated: function () {
+		console.log('loading finalized');
+		//	Saves lastTimeStamp.
+		settings.lastTimeStamp = lastPostTimeStamp;
+		writeSettings();
+		//	Must be called after finish of downloading.
+		highlightKeywords();
 	}
 };
 
@@ -181,9 +189,11 @@ function loadPosts() {
 			console.log('loading posts for ');
 			console.log(group);
 
-			loadItems(postList.load, postList.completed, '/groups/' + groupId + '/posts:(creation-timestamp,title,summary,site-group-post-url)', null, null, settings.lastTimeStamp);
+			console.log('lastTimeStamp: ' + settings.lastTimeStamp);
+
+			loadItems(postList.load, postList.completed, '/groups/' + groupId + '/posts:(creation-timestamp,title,summary,site-group-post-url)', null, null, settings.lastTimeStamp, postList.terminated);
 		}
-	}
+	} else postList.terminated();
 }
 
 function loadData() {
