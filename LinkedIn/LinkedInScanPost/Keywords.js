@@ -36,17 +36,28 @@ function deleteKeyword(index) {
 	}
 }
 
+function pushKeyword(keyword) {
+	if (isDefined(settings) && isDefined(settings.words) &&
+		!settings.words.some(
+			function (element) {
+				return (element === keyword);
+			}
+		))
+		settings.words.push(keyword);
+}
+
 function addKeyword() {
 	var keyword = $("#keyword").val().toLowerCase();
-	
+
 	if (isDefined(keyword) && keyword.length !== 0) {
-		if (isDefined(settings) && isDefined(settings.words) &&
-			!settings.words.some(
-				function (element) {
-					return (element === keyword);
-				}
-			))
-			settings.words.push(keyword);
+
+		//	Checks for a few keywords.
+		var list = keyword.split(" ");
+		if (list.length !== 0) {
+			for (var item in list) {
+				pushKeyword(list[item]);
+			}
+		} else pushKeyword(keyword);
 
 		writeSettings();
 		showKeywordList();
