@@ -13,15 +13,32 @@ function timestampToString(timestamp) {
 
 function hasWord(text) {
 	if (!isDefined(text)) return false;
+	
 	if (isDefined(settings) && isDefined(settings.words) && (settings.words.length !== 0)) {
+		var mandatoryKeywordsFound = 0;
+		
 		for (var i = 0; i < settings.words.length; i++) {
-			if (text.search(new RegExp(settings.words[i], 'i')) !== -1)
-				return true;
+			if (text.search(new RegExp(settings.words[i], 'i')) !== -1) {
+				//	The word is found.
+				if (settings.words[i][0] !== '+')
+					return true;
+				else {
+					//	Checks for other mandatory words.
+					mandatoryKeywordsFound++;
+					continue;
+				}
+			}
 		}
-		return false;
+
+		var mandatoryKeywords = 0;
+		for (var index in settings.words)
+			if (settings.words[index][0] === '+') mandatoryKeywords++;
+		
+		if (mandatoryKeywords !== 0 && mandatoryKeywords == mandatoryKeywordsFound)
+			return true;
 	}
-	//	Filter is undefined.
-	return true;
+	//	Filter is undefined or no keyword found.
+	return false;
 }
 
 var lastPostTimeStamp = null;
