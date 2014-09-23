@@ -37,7 +37,9 @@ function deleteKeyword(index) {
 }
 
 function pushKeyword(keyword) {
-	if (isDefined(settings) && isDefined(settings.words) &&
+	keyword = keyword.trim();
+	
+	if (isDefined(settings) && isDefined(settings.words) && keyword.length !== 0 &&
 		!settings.words.some(
 			function (element) {
 				return (element === keyword);
@@ -47,7 +49,7 @@ function pushKeyword(keyword) {
 }
 
 function addKeyword() {
-	var keyword = $("#keyword").val().toLowerCase();
+	var keyword = $("#keyword").val().toLowerCase().trim();
 
 	if (isDefined(keyword) && keyword.length !== 0) {
 
