@@ -27,10 +27,10 @@ function initMessageHandling() {
 }
 
 function linkedInLogoutClick() {
-	document.getElementById('iframe').contentWindow.postMessage('linkedInLogout', 'http://stat.townbreath.com');
+	document.getElementById('iframe').contentWindow.postMessage('linkedInLogout', 'http://mobile.townbreath.com');
 }
 
 function linkedInFindMoreClick() {
-	document.getElementById('iframe').contentWindow.postMessage('linkedInFindMore', 'http://stat.townbreath.com');	
+	document.getElementById('iframe').contentWindow.postMessage('linkedInFindMore', 'http://mobile.townbreath.com');	
 }
 
