@@ -222,11 +222,22 @@ function loadData() {
 }
 
 function authLinkedIn() {
-	IN.User.authorize(function() {
+	IN.User.authorize(function () {
 		this.loadData();
 		document.getElementById('panel_posts').style.visibility = 'visible';
 		document.getElementById('panel_login').style.visibility = 'hidden';
 	});
+}
+
+function checkAuthAndLoad() {
+	if (IN.User.isAuthorized()) {
+		this.loadData();
+		document.getElementById('panel_posts').style.visibility = 'visible';
+		document.getElementById('panel_login').style.visibility = 'hidden';
+	} else {
+		document.getElementById('panel_posts').style.visibility = 'hidden';
+		document.getElementById('panel_login').style.visibility = 'visible';
+	}
 }
 
 function updateParentHeight() {

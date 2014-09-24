@@ -16,12 +16,22 @@
 	<script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js"></script>
 	<script type="text/javascript" src="scripts/jquery.highlight-4.closure.js"></script>
 	<script type="text/javascript" src="scripts/jquery.highlight-4.js"></script>
-
+	
+	<!-- mobile.townbreath.com -->
 	<script type="text/javascript" src="http://platform.linkedin.com/in.js">
 		api_key: 75548prrx707qw
 		scope: rw_groups
 		authorize: true
 	</script>
+
+	<!-- dev.townbreath.com
+	<script type="text/javascript" src="http://platform.linkedin.com/in.js">
+		api_key: 75iztr1xt8c6k2
+		scope: rw_groups
+		authorize: true
+	</script>
+	-->
+
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 	<script type="text/javascript" src="Settings.js"></script>
@@ -44,9 +54,12 @@
 		}
 	</script>
 </head>
-	<body class="yui3-skin-sam	yui-skin-sam" onload="authLinkedIn();">
+	<!-- <body class="yui3-skin-sam	yui-skin-sam" onload="$('#linkedin_login').height($('#navigation').height());"> -->
+	<body class="yui3-skin-sam	yui-skin-sam" onload="checkAuthAndLoad();">
+		<!-- <script type="IN/Login" data-onauth="loadData();"></script> -->
 		<div class="center">
-			<div id="panel_posts">
+
+			<div id="panel_posts" style="visibility: hidden;">
 				<div id="navigation">
 					<ul class="nav nav-pills">
 						<li><a href="Settings.html">Keywords</a></li>
@@ -71,12 +84,12 @@
 				</div>
 			</div>
 			
-			<div class="jumbotron" style="visibility: hidden;" id="panel_login">
+			<div class="jumbotron" style="visibility: visible;" id="panel_login">
 				<h1>Authentication required!</h1>
 				<p>You should log into LinkedIn to see the posts.</p>
-				<p><a class="btn btn-primary btn-lg" role="button" onclick="authLinkedIn();">Log In</a></p>
+				<p><a class="btn btn-primary btn-lg" role="button" onclick="window.open('http://www.linkedin.com','_self');">Log In</a></p>
 			</div>
-
+			
 			<!-- Error dialog -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalErrorDialog"
 			     aria-hidden="true">
