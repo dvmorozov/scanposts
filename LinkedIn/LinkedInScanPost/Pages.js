@@ -13,7 +13,7 @@ function initMessageHandling() {
 	}
 
 	var messageEventHandler = function (event) {
-		if (event.origin === 'http://stat.townbreath.com') {
+		if (event.origin === 'http://mobile.townbreath.com') {
 			if (typeof event.data === "number")
 				resizeIframe(event.data);
 			else if (typeof event.data === "string") {
