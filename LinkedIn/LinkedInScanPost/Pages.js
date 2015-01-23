@@ -13,7 +13,7 @@ function initMessageHandling() {
 	}
 
 	var messageEventHandler = function (event) {
-		if (event.origin === 'http://stat.townbreath.com') {
+		if (event.origin === 'http://mobile.townbreath.com') {
 			if (typeof event.data === "number")
 				resizeIframe(event.data);
 			else if (typeof event.data === "string") {
@@ -27,10 +27,10 @@ function initMessageHandling() {
 }
 
 function linkedInLogoutClick() {
-	document.getElementById('iframe').contentWindow.postMessage('linkedInLogout', 'http://stat.townbreath.com');
+	document.getElementById('iframe').contentWindow.postMessage('linkedInLogout', 'http://mobile.townbreath.com');
 }
 
 function linkedInFindMoreClick() {
-	document.getElementById('iframe').contentWindow.postMessage('linkedInFindMore', 'http://stat.townbreath.com');	
+	document.getElementById('iframe').contentWindow.postMessage('linkedInFindMore', 'http://mobile.townbreath.com');	
 }
 
