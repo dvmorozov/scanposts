@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{634CEEBB-4068-4128-BF30-8EB740BF6380}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LinkedInScanPost</RootNamespace>
+    <AssemblyName>LinkedInScanPost</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DotNetOpenAuth.Core">
+      <HintPath>..\packages\DotNetOpenAuth.Core.4.1.0.12182\lib\net40-full\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core.UI">
+      <HintPath>..\packages\DotNetOpenAuth.Core.UI.4.1.0.12182\lib\net40-full\DotNetOpenAuth.Core.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.InfoCard">
+      <HintPath>..\packages\DotNetOpenAuth.InfoCard.4.1.0.12182\lib\net40-full\DotNetOpenAuth.InfoCard.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.InfoCard.UI">
+      <HintPath>..\packages\DotNetOpenAuth.InfoCard.UI.4.1.0.12182\lib\net40-full\DotNetOpenAuth.InfoCard.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.1.0.12182\lib\net40-full\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Common">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Common.4.1.0.12182\lib\net40-full\DotNetOpenAuth.OAuth.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Consumer.4.1.0.12182\lib\net40-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.ServiceProvider">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.ServiceProvider.4.1.0.12182\lib\net40-full\DotNetOpenAuth.OAuth.ServiceProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.4.1.0.12182\lib\net40-full\DotNetOpenAuth.OpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.Provider">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Provider.4.1.0.12182\lib\net40-full\DotNetOpenAuth.OpenId.Provider.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.Provider.UI">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Provider.UI.4.1.0.12182\lib\net40-full\DotNetOpenAuth.OpenId.Provider.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.1.0.12182\lib\net40-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty.UI">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.UI.4.1.0.12182\lib\net40-full\DotNetOpenAuth.OpenId.RelyingParty.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.UI">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.UI.4.1.0.12182\lib\net40-full\DotNetOpenAuth.OpenId.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenIdInfoCard.UI">
+      <HintPath>..\packages\DotNetOpenAuth.OpenIdInfoCard.UI.4.1.0.12182\lib\net40-full\DotNetOpenAuth.OpenIdInfoCard.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenIdOAuth">
+      <HintPath>..\packages\DotNetOpenAuth.OpenIdOAuth.4.1.0.12182\lib\net40-full\DotNetOpenAuth.OpenIdOAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="LinkedIn">
+      <HintPath>..\packages\LinkedInDeveloperTookit.1.0.0.0\lib\net35\LinkedIn.dll</HintPath>
+    </Reference>
+    <Reference Include="LinkedIn.NET">
+      <HintPath>..\packages\LinkedIn.NET.1.0.0.1\lib\net40-client\LinkedIn.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="JS\Keywords.js" />
+    <Content Include="HTML\LinkedIn.html" />
+    <Content Include="HTML\LinkedInInner.html" />
+    <Content Include="JS\LoadData.js" />
+    <Content Include="JS\Pages.js" />
+    <Content Include="CSS\ScanPosts.css" />
+    <Content Include="HTML\Settings.html" />
+    <Content Include="JS\Settings.js" />
+    <Content Include="HTML\SettingsInner.html" />
+    <Content Include="scripts\jquery.highlight-4.closure.js" />
+    <Content Include="scripts\jquery.highlight-4.js" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
