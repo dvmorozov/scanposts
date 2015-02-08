@@ -1,4 +1,5 @@
 ﻿
+// ReSharper disable UseOfImplicitGlobalInFunctionScope
 function isDefined(obj) {
 	if (obj !== undefined && obj !== null) return true;
 	else return false;
@@ -147,7 +148,7 @@ var postList = {
 								lastPostTimeStamp = timestamp;
 						}
 
-						text = '<div class="panel panel-primary">';
+						var text = '<div class="panel panel-primary">';
 						text += '<div class="panel-heading"><h3 class="panel-title">' +
 							posts.values[j].title + '</h3></div>';
 
@@ -224,6 +225,7 @@ function loadData() {
 function authLinkedIn() {
 	IN.User.authorize(function () {
 		this.loadData();
+
 		document.getElementById('panel_posts').style.visibility = 'visible';
 		document.getElementById('panel_login').style.visibility = 'hidden';
 	});
@@ -246,3 +248,4 @@ function updateParentHeight() {
 		window.parent.postMessage(document.body.scrollHeight, "http://townbreath.com");
 	}
 }
+// ReSharper restore UseOfImplicitGlobalInFunctionScope

@@ -1,4 +1,4 @@
-﻿
+﻿// ReSharper disable UseOfImplicitGlobalInFunctionScope
 var settings = null;
 
 var staticSettings = {
@@ -38,7 +38,7 @@ function createDefaultConfig() {
 
 function initScanQueues() {
 	console.log('initializes scan queues');
-	
+
 	if (isDefined(settings))
 		settings.prevScanQueues = {
 			scannedGroups: [],
@@ -185,3 +185,4 @@ function writeSettings() {
 	var text = JSON.stringify(settings);
 	$.cookie('settings', text);
 }
+// ReSharper restore UseOfImplicitGlobalInFunctionScope

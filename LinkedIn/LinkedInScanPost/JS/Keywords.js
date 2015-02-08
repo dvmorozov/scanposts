@@ -1,4 +1,6 @@
 ﻿
+// ReSharper disable UseOfImplicitGlobalInFunctionScope
+
 function showKeywordList() {
 	if (isDefined(settings) && isDefined(settings.words)) {
 		$("#keywords").empty();
@@ -70,3 +72,4 @@ function fillKeywords() {
 	readSettings();
 	showKeywordList();
 }
+// ReSharper restore UseOfImplicitGlobalInFunctionScope

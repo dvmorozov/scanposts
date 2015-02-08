@@ -1,4 +1,4 @@
-﻿
+﻿// ReSharper disable UseOfImplicitGlobalInFunctionScope
 function openUrl(url) {
 	var win = window.open(url, '_blank');
 	win.focus();
@@ -33,4 +33,4 @@ function linkedInLogoutClick() {
 function linkedInFindMoreClick() {
 	document.getElementById('iframe').contentWindow.postMessage('linkedInFindMore', 'http://mobile.townbreath.com');	
 }
-
+// ReSharper restore UseOfImplicitGlobalInFunctionScope
