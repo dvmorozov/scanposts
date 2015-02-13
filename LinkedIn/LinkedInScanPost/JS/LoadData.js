@@ -173,6 +173,7 @@ var postList = {
 				}
 			}
 		}
+		updateParentHeight();
 	},
 
 	completed: function () {
@@ -244,8 +245,8 @@ function checkAuthAndLoad() {
 
 function updateParentHeight() {
 	if (isDefined(window.parent)) {
-		console.log('updateParentHeight: document.body.scrollHeight');
-		window.parent.postMessage(document.body.scrollHeight, "http://townbreath.com");
+		console.log('updateParentHeight: ' + document.body.clientHeight);
+		window.parent.postMessage(document.body.clientHeight, "http://townbreath.com");
 	}
 }
 // ReSharper restore UseOfImplicitGlobalInFunctionScope
